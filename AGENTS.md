@@ -18,7 +18,7 @@ Brief for AI agents and new contributors working on ClassNest. Read this first.
 4. [docs/06-go-to-market-and-onboarding.md](docs/06-go-to-market-and-onboarding.md) — how we sell.
 5. [docs/04-market-research.md](docs/04-market-research.md) — evidence and sources.
 6. [docs/02-problems-and-benefits.md](docs/02-problems-and-benefits.md) and [docs/03-pros-cons-risks.md](docs/03-pros-cons-risks.md).
-7. Shared platform: [../core/README.md](../core/README.md).
+7. Shared platform: [../core/README.md](https://github.com/craftLayer-studio/craftlayer-core/blob/main/README.md).
 
 ## Glossary
 

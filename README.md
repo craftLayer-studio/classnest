@@ -48,4 +48,10 @@ Anchor: Classplus lists Starter at ₹19,999/year + GST and Grow at ₹22,999/ye
 | [05 Pricing and revenue](docs/05-pricing-and-revenue.md) | Tiers, add-ons, unit economics, 12-month scenarios |
 | [06 Go-to-market and onboarding](docs/06-go-to-market-and-onboarding.md) | First 10 customers, sales script, onboarding checklist |
 
-Built on the CraftLayer shared core: [core/README.md](../core/README.md).
+Built on the CraftLayer shared core: [core/README.md](https://github.com/craftLayer-studio/craftlayer-core/blob/main/README.md).
+
+## Licence
+
+Source-available under the [PolyForm Noncommercial License 1.0.0](LICENSE.md). Personal, educational, research and non-profit use is free. **Any commercial use requires a paid licence or written permission from CraftLayer Studio.** See [COMMERCIAL-LICENSE.md](COMMERCIAL-LICENSE.md).
+
+Part of the [CraftLayer Products](https://github.com/craftLayer-studio/craftlayer-products) portfolio.
