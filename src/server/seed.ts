@@ -125,10 +125,10 @@ export async function seedDemo(db: Db, now = Date.now()) {
       lateFeePaise: 10000,
       createdAt: new Date(now - 90 * 86_400_000),
     });
-    const owner = newId("usr");
-    const staff = newId("usr");
-    const arjun = newId("usr");
-    const kavita = newId("usr");
+    const owner = "usr_demo_owner";
+    const staff = "usr_demo_staff";
+    const arjun = "usr_demo_arjun";
+    const kavita = "usr_demo_kavita";
     await tx.insert(t.users).values([
       { id: owner, orgId, role: "owner", ...DEMO.owner },
       { id: staff, orgId, role: "staff", ...DEMO.staff },
@@ -204,8 +204,10 @@ export async function seedDemo(db: Db, now = Date.now()) {
         const late = isPast && paid < p.amount && p.dueDate < addDays(today, -5) ? 10000 : 0;
         await tx.insert(t.instalments).values({ id: insId, orgId, studentId: sid, courseId: courseIds[batchDefs[b].course], seq: p.seq, dueDate: p.dueDate, amountPaise: p.amount, paidPaise: paid, lateFeePaise: late, remindersSent: reminders });
         if (paid > 0) {
+          // Most families got the D-3 reminder before paying, so the dashboard can show follow-up results.
+          if (updates && rand() < 0.7) msg("fee_reminder", phone, feeReminder({ student: name, amount: p.amount, due: p.dueDate, institute: DEMO.name, link: "/p/…", overdue: false }), at(addDays(p.dueDate, -3), 600));
           receiptSeq++;
-          const payDate = addDays(p.dueDate, Math.floor(rand() * 4) - 1);
+          const payDate = addDays(p.dueDate, Math.floor(rand() * 3));
           const when = at(payDate <= today ? payDate : today, 1080 + Math.floor(rand() * 120));
           const receiptNo = receiptNumber("SDA", istDateKey(when.getTime()), receiptSeq);
           const token = newToken();
