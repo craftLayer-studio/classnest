@@ -1,0 +1,11 @@
+@import '@astryxdesign/core/reset.css';
+@import '@astryxdesign/core/astryx.css';
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--color-background-body); color: var(--color-text-primary); font-family: var(--font-family-body); }
+
+/* Printable QR sheet and receipts: hide the app navigation. */
+@media print {
+  nav { display: none !important; }
+}
