@@ -65,18 +65,18 @@ Priority key: P0 = MVP, sellable in 6–8 weeks; P1 = months 3–6; P2 = months 
 
 | Feature | Priority | Metric moved | Notes |
 |---|---|---|---|
-| Institute, branch, batch, course setup with Excel import | P0 | Activation | Onboarding wizard from core; target setup in under 30 minutes |
-| Student and guardian records with consent capture | P0 | Activation | Verifiable parental consent for under-18s (see compliance) |
-| Entrance QR attendance + one-tap teacher marking | P0 | Retention | Works offline on the staff app; syncs later |
-| Absence alerts to parents on WhatsApp | P0 | Retention | Utility template; absence-only by default |
-| Fee plans, instalments, discounts, late fee | P0 | Revenue | Pro-rata refund calculator for the 2024 guidelines |
-| UPI payment links and auto-reminders | P0 | Revenue | Razorpay via core payments |
-| Digital receipts with GST fields | P0 | Revenue | Coaching is taxable at 18% GST (see doc 04) |
-| Defaulter dashboard | P0 | Revenue | The demo moment in every sales call |
-| Enquiry CRM + poster QR demo booking | P0 | Acquisition | Needed before March admission season |
-| Owner dashboard (attendance %, collected vs due, leads) | P0 | Retention | |
-| Batches and timetable with clash detection | P1 | Activation | |
-| Tests, marks, rank and parent report cards | P1 | Retention, referral | Report cards are shared by parents; add "Powered by ClassNest" |
+| Institute, branch, batch, course setup with Excel import | P0 | Activation | Onboarding wizard from core; target setup in under 30 minutes; **Built:** courses and batches (single branch). Excel import and wizard not yet. |
+| Student and guardian records with consent capture | P0 | Activation | Verifiable parental consent for under-18s (see compliance); **Built:** minimal records, guardian WhatsApp consent link, consent ledger, erasure. |
+| Entrance QR attendance + one-tap teacher marking | P0 | Retention | Works offline on the staff app; syncs later; **Built:** entrance QR self check-in, ID-card kiosk scan, one-tap marking. Offline sync not yet. |
+| Absence alerts to parents on WhatsApp | P0 | Retention | Utility template; absence-only by default; **Built:** 15-minute cutoff job, absence-only default (simulated WhatsApp). |
+| Fee plans, instalments, discounts, late fee | P0 | Revenue | Pro-rata refund calculator for the 2024 guidelines; **Built:** plans, instalments, discount, flat late fee; refund calculator in domain only. |
+| UPI payment links and auto-reminders | P0 | Revenue | Razorpay via core payments; **Built:** UPI intent links and D-3/D0/D+3/D+7 reminders. Razorpay not yet. |
+| Digital receipts with GST fields | P0 | Revenue | Coaching is taxable at 18% GST (see doc 04); **Built.** |
+| Defaulter dashboard | P0 | Revenue | The demo moment in every sales call; **Built.** |
+| Enquiry CRM + poster QR demo booking | P0 | Acquisition | Needed before March admission season; **Built:** poster QR booking, pipeline, one-tap admit, marketing offers to opt-ins. |
+| Owner dashboard (attendance %, collected vs due, leads) | P0 | Retention | **Built.** |
+| Batches and timetable with clash detection | P1 | Activation | **Built (MVP).** |
+| Tests, marks, rank and parent report cards | P1 | Retention, referral | Report cards are shared by parents; add "Powered by ClassNest"; **Built (MVP)** |
 | Homework and notes per batch | P1 | Retention | PDF and image; storage cap per plan |
 | Teacher payouts (per batch, per hour, per student) | P1 | Retention | Owner stickiness; hard to migrate away |
 | UPI AutoPay mandates for monthly fees | P1 | Revenue | Within NPCI limits |

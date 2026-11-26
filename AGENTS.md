@@ -71,6 +71,40 @@ ClassNest-specific modules: batches/timetable, fee plans and instalments, tests 
 4. Should music/art academies get a separate landing page and plan ("ClassNest Studio")? Their needs (monthly fees, slot booking, recitals) differ from exam coaching.
 5. Name check: no established product named "ClassNest" was found (only a hackathon project on FOSS United). Similar names exist (Classplus, ClassInTown, ClassNet). Run an Indian trademark search in Class 9, 41 and 42 before launch. Backup names if a conflict appears: **BatchBell**, **TuitionTrack**.
 
+## Code
+
+MVP web app: Next.js 16 (App Router, webpack), React 19, TypeScript strict, Astryx design system (`butter` theme), Drizzle ORM on Postgres (PGlite file DB in dev, in-memory PGlite in tests, `pg` when `DATABASE_URL` is set), Vitest.
+
+### Structure
+
+| Path | What lives there |
+|---|---|
+| `src/domain/` | Pure business rules, no React/Next/IO: money (paise), IST time, phone (E.164), schedule and clash detection, attendance, fees (instalments, reminders, GST, defaulters, refunds), marks (rank, grade), enquiry pipeline, consent purposes, message templates. Unit tests sit next to each file. |
+| `src/server/db/` | `schema.ts` (every business table has `org_id`), `client.ts` (driver selection, migrations, auto-seed), `migrations/` (drizzle-kit SQL, committed), `seed-cli.ts`. |
+| `src/server/store/` | Use cases and data access. Every function takes a `Ctx` (db, orgId from the signed session, user, role, clock, base URL) or a public token, filters by `org_id`, checks roles with `requireRole`, and throws `StoreError(status, message)` for user-facing errors. |
+| `src/server/adapters/` | Integration seams: `messaging.ts` (simulated WhatsApp writes to `outbox`), `payments.ts` (UPI intent links). |
+| `src/server/` | `http.ts` (handle, body parsing, validators), `session.ts` (HMAC-signed httpOnly cookie), `context.ts` (page/API context), `rate-limit.ts`, `qr.ts`, `seed.ts` (fictional demo institute). |
+| `src/app/api/` | Thin dispatchers: `auth/[action]`, `public/[action]` (rate-limited QR endpoints), `staff/[action]`, `cron`. Parse, validate, call the store, return JSON. |
+| `src/app/` | Pages. Staff: `/app/*`. Public (no login, mobile-first): `/q/[token]` entrance check-in, `/c/[code]` ID card, `/e/[token]` demo booking, `/p/[token]` parent page, `/consent/[token]`, `/receipt/[token]`. Landing `/`, sign-in `/login`. |
+| `src/components/` | Client components built from Astryx (`app/` staff screens, `public/` QR and parent pages, `ui.tsx` shared bits). |
+
+### Commands
+
+`pnpm dev`, `pnpm build`, `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm db:generate`, `pnpm db:seed`, `pnpm exec astryx doctor --built .next`. Before pushing: `pnpm typecheck && pnpm lint && pnpm test && pnpm build` and astryx doctor must pass. Dev servers for checks use a free port in 3101–3199 and must be stopped afterwards.
+
+### Rules
+
+- Money is integer paise; never floats. Dates are IST `YYYY-MM-DD` keys; instants are UTC `timestamptz`.
+- Every query filters by `org_id`; the org always comes from the session or a public token, never from the request body.
+- Roles are enforced in the store (`owner`, `staff`, `teacher`), not only in the UI.
+- Phones are E.164 (`+91…`) via `normalizeIndianPhone`.
+- Students are minors by default. Keep the student record minimal (no DOB, address, photo or student phone). Messages go only to guardians or enquirers, utility messages need `service_updates` consent, offers need `marketing` consent. Consent is append-only in `consent_records`. No ads, analytics or behavioural tracking.
+- Integrations stay behind adapters with a simulated default. No real keys, paid services or third-party network calls.
+- Public tokens and card codes are random (`newToken`, `newCardCode`), never sequential ids. Public endpoints are rate-limited.
+- Schema change: edit `schema.ts`, run `pnpm db:generate`, commit the migration.
+- UI: start from Astryx templates and components; no raw `div`/`span` layout, no hex/px, no Tailwind. Theme colours come from the theme.
+- Commits: conventional subjects (`feat:`, `fix:`, `test:`, `docs:`, `chore:`). No `Co-Authored-By` trailers or "Generated with" lines.
+
 <!-- ASTRYX:START -->
 Astryx v0.7.17 · 174 components
 CLI: run every command as `pnpm exec astryx <cmd>` (shown below as `astryx ...`).
@@ -103,3 +137,13 @@ RULES:
   upgrade --from <old version> --apply   run after a dependency bump
 To remove this block, run `astryx init --remove-agents`, which removes it from the agent files at the project root and in the folder you run it in; from any other file it leaves, delete everything from ASTRYX:START to ASTRYX:END.
 <!-- ASTRYX:END -->
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
